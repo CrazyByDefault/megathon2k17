@@ -38,11 +38,11 @@ router.use(function(req, res, next) {
 }, bodyParser.json());
 
 router.post('/api', function(req, res, next) {
-	console.log('Recieved data' + req.body.values[0]);
-	if(count < 320) {
-		res.json(JSON.stringify({ "stayOn": 1 }));
+	console.log('Recieved data' + req.body.Value);
+	if(count < 3) {
+		res.json(1);
 	} else {
-		res.json(JSON.stringify({ "stayOn": 0 }));
+		res.json(0);
 	}
 });
 
