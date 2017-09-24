@@ -11,6 +11,7 @@ var shell      = require('node-cmd');
 var tcp        = require('tcp-proxy');
 
 var path = __dirname
+var bulbOn = true;
 
 var server = tcp.createServer({
   target: {
@@ -54,18 +55,63 @@ router.get('/images/:image', function(req, res, err) {
 	res.sendFile(path + "/images/" + req.params.image);
 });
 
+var f='data.csv',
+    fs=require('fs');
+
+// fs.writeFile(f,'Some text to write.',function(err){
+//   if(err)
+//     console.error(err);
+//   console.log('Written!');
+// });
+
++new Date
+
+var presentCost = 0;
+
+// var lastLine = require('last-line');
+
+// var fs = require('fs'); // file system module
+
+fs.readFile(f, 'utf-8', function(err, data) {
+    if (err) throw err;
+
+    var lines = data.trim().split('\n');
+    var lastLine = lines.slice(-1)[0];
+
+    var fields = lastLine.split(',');
+    var audioFile = fields.slice(-1)[0].replace('file:\\\\', '');
+
+    presentCost = parseInt(audioFile)
+    console.log(presentCost)
+});
+
+router.get('/turnOff', function(req, res, next) {
+	bulbOn = !bulbOn;
+	console.log('bulb toggle');
+});
+
 router.post('/api', function(req, res, next) {
 	var received = req.body.Value;
 	console.log('Recieved data' + req.body.Value);
-	if (received == 1) {
-		count++;
-	}
-
-	if(count < 3) {
+	if(bulbOn){
 		res.json(1);
 	} else {
 		res.json(0);
 	}
+
+
+	if (received == 1) {
+		var tt = Date.now()
+		presentCost = presentCost + 1
+		var toAppend = presentCost + " , " + tt + " ;\n"
+		fs.appendFile(f,toAppend,function(err){
+		  if(err)
+		    console.error(err);
+		  console.log('Appended!');
+		});
+	}
+
+
 });
 
 // more routes for our API will happen here
