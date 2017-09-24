@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var shell      = require('node-cmd');
 var tcp        = require('tcp-proxy');
 
+var path = __dirname
+
 var server = tcp.createServer({
   target: {
     host: '127.0.0.1',
@@ -35,6 +37,22 @@ router.use(function(req, res, next) {
     console.log('Something is happening.');
     next();
 }, bodyParser.json());
+
+router.get('/', function(req, res, err) {
+	res.sendFile(path + "/index.html");
+});
+
+router.get('/styles.css', function(req, res, err) {
+	res.sendFile(path + "/styles.css");
+});
+
+router.get('/spam', function(req, res, err) {
+	res.sendFile(path + "/spam.html");
+});
+
+router.get('/images/:image', function(req, res, err) {
+	res.sendFile(path + "/images/" + req.params.image);
+});
 
 router.post('/api', function(req, res, next) {
 	var received = req.body.Value;
