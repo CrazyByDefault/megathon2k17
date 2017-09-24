@@ -57,9 +57,12 @@ router.get('/images/:image', function(req, res, err) {
 router.post('/api', function(req, res, next) {
 	var received = req.body.Value;
 	console.log('Recieved data' + req.body.Value);
-	if(count < 3 && received == 1) {
-		res.json(1);
+	if (received == 1) {
 		count++;
+	}
+
+	if(count < 3) {
+		res.json(1);
 	} else {
 		res.json(0);
 	}
