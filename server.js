@@ -33,14 +33,15 @@ var count = 0;
 
 router.use(function(req, res, next) {
     console.log('Something is happening.');
-    count++;
     next();
 }, bodyParser.json());
 
 router.post('/api', function(req, res, next) {
+	var received = req.body.Value;
 	console.log('Recieved data' + req.body.Value);
-	if(count < 3) {
+	if(count < 3 && received == 1) {
 		res.json(1);
+		count++;
 	} else {
 		res.json(0);
 	}
