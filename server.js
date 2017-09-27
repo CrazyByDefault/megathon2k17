@@ -64,7 +64,7 @@ var f='data.csv',
 //   console.log('Written!');
 // });
 
-+new Date
+// +new Date
 
 var presentCost = 0;
 
@@ -101,7 +101,7 @@ router.post('/api', function(req, res, next) {
 
 
 	if (received == 1) {
-		var tt = Date.now()
+		var tt = (new Date()).getTime();
 		presentCost = presentCost + 1
 		var toAppend = presentCost + " , " + tt + " ;\n"
 		fs.appendFile(f,toAppend,function(err){
