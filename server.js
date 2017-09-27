@@ -16,18 +16,18 @@ var bulbOn = true;
 var server = tcp.createServer({
   target: {
     host: '127.0.0.1',
-    port: 8080
+    port: 80
   }
 });
 
-server.listen(8081);
+server.listen(81);
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+var port = process.env.PORT || 80;        // set our port
 
 // ROUTES FOR OUR API
 // =============================================================================
